@@ -1,0 +1,9 @@
+{
+  "appId": "com.yourname.hindienglishstories",
+  "appName": "Hindi-English Stories",
+  "webDir": "www",
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https"
+  }
+}
