@@ -1,0 +1,59 @@
+name: Build Android APK
+
+# Runs automatically whenever you push changes, and can also be started
+# manually from the Actions tab (the "Run workflow" button) — useful for
+# rebuilding without changing anything, e.g. after only updating an ad unit ID.
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch: {}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install project dependencies
+        run: npm install
+
+      - name: Unzip bundled audio into www/audio
+        run: |
+          mkdir -p www/audio
+          unzip -o audio.zip -d www/audio
+
+      - name: Add the Android native project
+        run: npx cap add android
+
+      - name: Patch AndroidManifest.xml and strings.xml (AdMob + TTS)
+        run: node patch-android.js
+
+      - name: Sync web assets and plugins into the native project
+        run: npx cap sync android
+
+      - name: Build the debug APK
+        working-directory: android
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug
+
+      - name: Upload the APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-debug-apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk
