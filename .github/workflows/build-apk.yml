@@ -26,15 +26,49 @@ jobs:
           distribution: temurin
           java-version: '21'
 
+      # This action sometimes exits with an error if it can't finish
+      # accepting every SDK license itself, even though it successfully
+      # downloads the SDK tools. continue-on-error lets the job proceed —
+      # the next step below finishes accepting the licenses properly.
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
+        continue-on-error: true
 
       - name: Accept any remaining Android SDK licenses
-        run: yes | sdkmanager --licenses || true
+        run: |
+          SDK_ROOT="${ANDROID_SDK_ROOT:-$ANDROID_HOME}"
+          SDKMANAGER=$(find "$SDK_ROOT/cmdline-tools" -type f -name sdkmanager | sort -V | tail -1)
+          echo "Using sdkmanager at: $SDKMANAGER"
+          yes | "$SDKMANAGER" --licenses || true
 
       - name: Install project dependencies
         run: npm install
 
+      - name: Unzip bundled audio into www/audio
+        run: |
+          mkdir -p www/audio
+          unzip -o audio.zip -d www/audio
+
+      - name: Add the Android native project
+        run: npx cap add android
+
+      - name: Patch AndroidManifest.xml and strings.xml (AdMob + TTS)
+        run: node patch-android.js
+
+      - name: Sync web assets and plugins into the native project
+        run: npx cap sync android
+
+      - name: Build the debug APK
+        working-directory: android
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug
+
+      - name: Upload the APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-debug-apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk
       - name: Unzip bundled audio into www/audio
         run: |
           mkdir -p www/audio
