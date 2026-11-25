@@ -28,6 +28,10 @@ jobs:
 
       - name: Set up Android SDK
         uses: android-actions/setup-android@v3
+        with:
+          # The default package list includes "tools", which no longer exists in the
+          # current SDK manager and made this step fail. Gradle fetches what it needs.
+          packages: ''
 
       - name: Install project dependencies
         run: npm install
