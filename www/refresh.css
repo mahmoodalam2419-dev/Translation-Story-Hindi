@@ -1,0 +1,60 @@
+/* PleasantLearn visual refresh — responsive polish, no content or learning logic changed. */
+:root{--lw-ink:#17233b;--lw-muted:#65728a;--lw-line:#e4eaf3;--lw-paper:#fff;--lw-bg:#f5f8fd;--lw-blue:#245eea;--lw-teal:#0d9488;--lw-shadow:0 12px 34px rgba(24,47,89,.08)}
+html{scroll-behavior:smooth;scroll-padding-top:82px}
+body{ text-rendering:optimizeLegibility }
+button,a,input,select,textarea{ -webkit-tap-highlight-color:transparent }
+:focus-visible{outline:3px solid #78a5ff!important;outline-offset:3px!important}
+img,svg,video,canvas{max-width:100%}
+/* Homepage */
+body.home-page{background:var(--lw-bg);color:var(--lw-ink)}
+.home-page .site-header,.home-page header{backdrop-filter:saturate(150%) blur(14px)}
+.home-page .hero{background:radial-gradient(ellipse at 85% 0%,#e2edff 0,transparent 48%),linear-gradient(180deg,#fff 0%,#f7faff 100%);}
+.home-page .hero h1{letter-spacing:-.045em;line-height:1.12;max-width:760px}
+.home-page .lead{max-width:680px;line-height:1.75}
+.home-page .card,.home-page .tile-card,.home-page .feature-card,.home-page .quiz,.home-page .res-strip,.home-page .mini{border-color:#e4eaf3;box-shadow:var(--lw-shadow);transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}
+.home-page .card,.home-page .tile-card,.home-page .feature-card{border-radius:22px}
+.home-page .btn,.home-page .btn-primary,.home-page .chip-btn{transition:transform .18s ease,box-shadow .18s ease,background .18s ease}
+.home-page .btn:active,.home-page .chip-btn:active{transform:scale(.98)}
+.home-page a{ text-underline-offset:3px }
+/* Vocabulary practice */
+body.vocabulary-page{background:linear-gradient(180deg,#edf4ff 0,#f7f9fd 230px,#f7f9fd 100%);color:var(--lw-ink)}
+.vocabulary-page .top{background:rgba(255,255,255,.92);backdrop-filter:blur(16px);border-bottom:1px solid rgba(220,229,242,.9);box-shadow:0 4px 20px rgba(27,52,93,.04);padding-left:max(16px,env(safe-area-inset-left));padding-right:max(16px,env(safe-area-inset-right))}
+.vocabulary-page main{max-width:900px;padding:clamp(16px,3vw,30px)}
+.vocabulary-page .card{border-radius:22px;padding:clamp(16px,2.5vw,24px);box-shadow:0 10px 30px rgba(27,52,93,.06);border-color:#e5ebf4}
+.vocabulary-page h1{font-size:clamp(1.55rem,4vw,2.15rem);letter-spacing:-.035em;line-height:1.2}
+.vocabulary-page h2{font-size:clamp(1.05rem,2.5vw,1.25rem)}
+.vocabulary-page input,.vocabulary-page select,.vocabulary-page textarea{max-width:100%;border-radius:13px}
+.vocabulary-page button{touch-action:manipulation;transition:transform .15s ease,background .15s ease,border-color .15s ease}
+.vocabulary-page button:active{transform:scale(.98)}
+.vocabulary-page .word .w{line-height:1.25;overflow-wrap:anywhere}
+/* Spoken English course */
+body.spoken-page{background:linear-gradient(180deg,#edf4ff 0,#f8faff 280px,#f7f9fc 100%)}
+.spoken-page .topbar{background:rgba(255,255,255,.94);backdrop-filter:blur(16px);box-shadow:0 3px 18px rgba(27,52,93,.04)}
+.spoken-page .hero{padding-top:clamp(24px,5vw,46px)}
+.spoken-page .hero h1{letter-spacing:-.04em;line-height:1.15}
+.spoken-page .stage,.spoken-page .card{border-radius:22px;box-shadow:0 12px 32px rgba(27,52,93,.07);border-color:#e3eaf4}
+.spoken-page .days{gap:8px}
+.spoken-page .day,.spoken-page .day-btn{border-radius:13px}
+.spoken-page .btn{min-height:48px}
+/* Ganit Yatra — preserve its playful dark maths-game identity while making desktop layouts less narrow. */
+body.ganit-page{background-color:#0e1530}
+.ganit-page #app{max-width:860px;padding-left:clamp(12px,2.5vw,24px);padding-right:clamp(12px,2.5vw,24px)}
+.ganit-page .top{box-shadow:0 12px 28px rgba(0,0,0,.22);border-color:rgba(117,140,235,.28)}
+.ganit-page .card,.ganit-page .panel,.ganit-page .box{border-radius:20px}
+.ganit-page button{touch-action:manipulation}
+@media(min-width:760px){
+ .home-page .hero{padding-top:clamp(42px,6vw,82px);padding-bottom:clamp(46px,6vw,86px)}
+ .vocabulary-page main{padding-top:28px}
+ .spoken-page .wrap{max-width:980px}
+}
+@media(max-width:420px){
+ .vocabulary-page main{padding:12px}
+ .vocabulary-page .card{padding:14px;border-radius:17px}
+ .spoken-page .wrap{padding-left:12px;padding-right:12px}
+}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important;scroll-behavior:auto!important}}
+
+/* Free Spoken English course banner */
+.free-banner{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;padding:10px 16px;background:linear-gradient(90deg,#0D6EFD,#20A99A);color:#fff;text-decoration:none;font-size:.95rem;text-align:center}
+.free-banner:hover{filter:brightness(1.06)}.free-banner .fb-badge{background:#F4BE55;color:#263449;font-weight:800;letter-spacing:.08em;border-radius:20px;padding:2px 12px;font-size:.8rem}
+.free-banner .fb-go{font-weight:700;border:1.5px solid rgba(255,255,255,.85);border-radius:20px;padding:2px 14px}
